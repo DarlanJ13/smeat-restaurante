@@ -1,26 +1,53 @@
+import { useState, useEffect } from 'react';
 import IMAGES from '../data/images';
 
+// Array de imagens de fundo usando os links configurados no seu images.ts
+const BACKGROUND_IMAGES = [
+  IMAGES.hero,
+  IMAGES.steak,
+  IMAGES.interior,
+];
+
 export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Efeito para alternar a imagem de fundo a cada 5 segundos (Estilo Carní)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === BACKGROUND_IMAGES.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // 5000ms = 5 segundos
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       id="home"
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F0F0F] px-6"
     >
-      {/* Imagem de Fundo Imersiva (Visual de Revista / Gastronomia de Luxo) */}
+      {/* Imagens de Fundo Imersivas em Carrossel (Visual de Revista / Gastronomia de Luxo) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img
-          src={IMAGES.hero}
-          alt="Corte premium grelhado em chama aberta em ambiente sofisticado"
-          className="h-full w-full object-cover opacity-35 select-none pointer-events-none scale-105 transition-transform duration-[10000ms] ease-out animate-pulse-slow"
-          loading="eager"
-        />
-        {/* Vinheta Editorial (Gradiente radial + linear que foca o centro e escurece as bordas) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-[#0F0F0F]/70" />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
+        {BACKGROUND_IMAGES.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`Corte premium grelhado em chama aberta em ambiente sofisticado - Slide ${index + 1}`}
+            className={`absolute inset-0 h-full w-full object-cover select-none pointer-events-none scale-105 transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? 'opacity-35 z-10' : 'opacity-0 z-0'
+            }`}
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        ))}
+        
+        {/* Vinheta Editorial Fixa (Mantida idêntica por cima das fotos) */}
+        <div className="absolute inset-0 z-20 bg-gradient-to-t from-[#0F0F0F] via-transparent to-[#0F0F0F]/70" />
+        <div className="absolute inset-0 z-20 bg-black/20 backdrop-blur-[1px]" />
       </div>
 
       {/* Conteúdo Centralizado Baseado no Layout do Carní */}
-      <div className="relative z-10 mx-auto w-full max-w-5xl text-center flex flex-col items-center justify-center pt-20">
+      <div className="relative z-30 mx-auto w-full max-w-5xl text-center flex flex-col items-center justify-center pt-20">
         
         {/* Subtítulo com espaçamento ultra-wide elegante */}
         <p className="animate-fade mb-6 text-[10px] font-medium uppercase tracking-[0.4em] text-brass sm:text-xs">
@@ -36,7 +63,7 @@ export default function Hero() {
         {/* Texto de Apoio Centralizado e Fluido */}
         <p className="animate-fade-up mt-8 max-w-xl text-balance font-sans text-sm leading-relaxed text-ivory/60 font-light sm:text-base md:text-lg">
           Smeat é uma experiência steakhouse premium construída em torno da
-          chame aberta, ingredientes excepcionais e o teatro silencioso da
+          chama aberta, ingredientes excepcionais e o teatro silencioso da
           cozinha artesanal.
         </p>
         
@@ -58,7 +85,7 @@ export default function Hero() {
       </div>
 
       {/* Linha Indicadora de Rolar Lateral/Vertical Ultra Minimalista */}
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 text-ivory/20 lg:flex">
+      <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 hidden -translate-x-1/2 flex-col items-center gap-3 text-ivory/20 lg:flex">
         <span className="text-[9px] uppercase tracking-[0.3em] font-mono">Rolar</span>
         <div className="h-12 w-px bg-gradient-to-b from-ivory/30 to-transparent relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1/2 bg-brass animate-scroll-line" />

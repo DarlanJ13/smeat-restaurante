@@ -17,9 +17,9 @@ export default function Footer() {
                 Endereço
               </p>
               <address className="mt-4 not-italic text-sm leading-relaxed text-ivory/70">
-                Av. Brasil, 1234
+                R. Raul Teixeira Penteado, 80 - Bairro das Palmeiras
                 <br />
-                Rio Claro — SP
+                Campinas - SP
               </address>
             </div>
             <div>

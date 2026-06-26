@@ -6,6 +6,8 @@ const IMAGES = {
   dish2: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1200&auto=format&fit=crop',
   dish3: 'https://images.unsplash.com/photo-1432139509613-5c4255815697?q=80&w=1200&auto=format&fit=crop',
   chef: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1200&auto=format&fit=crop',
+  // A sua foto real carregada a partir do diretório public
+  fachada: '/images/fachada.jpg', 
 };
 
 export default IMAGES;

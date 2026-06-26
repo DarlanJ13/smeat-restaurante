@@ -1,12 +1,11 @@
 import IMAGES from '../data/images';
 
 export default function FeaturedDishes() {
-  // Função para rolar suavemente até o menu e você pode integrar para disparar o filtro correto se tiver um estado global
+  // Função atualizada para rolar suavemente até a seção de contato/reserva
   const handleCategoryClick = (id: string) => {
-    const element = document.getElementById('menu');
+    const element = document.getElementById('contato');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      // Se futuramente quiser despachar um evento customizado para mudar a categoria ativa no MenuSection:
       window.dispatchEvent(new CustomEvent('changeMenuCategory', { detail: id }));
     }
   };
@@ -35,7 +34,6 @@ export default function FeaturedDishes() {
               alt="Cardápio À La Carte" 
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
-            {/* Textura geométrica sutil no topo e base da imagem interna se desejar emular o detalhe de linhas */}
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
           </div>
           <h3 className="font-serif text-2xl lg:text-3xl font-light text-ivory mb-2 tracking-wide group-hover:text-brass transition-colors">
@@ -46,7 +44,7 @@ export default function FeaturedDishes() {
           </span>
         </div>
 
-        {/* CATEGORIA 2: Executivo (Rebaixado verticalmente no desktop para criar o efeito mosaico) */}
+        {/* CATEGORIA 2: Executivo (Rebaixado verticalmente no desktop) */}
         <div 
           onClick={() => handleCategoryClick('executivo')}
           className="group cursor-pointer flex flex-col items-center text-center transition-transform duration-500 hover:-translate-y-2 md:mt-12"
@@ -74,7 +72,7 @@ export default function FeaturedDishes() {
         >
           <div className="relative w-full aspect-[4/5] overflow-hidden rounded-md border border-white/5 shadow-xl mb-6">
             <img 
-              src={IMAGES.dish3} 
+              src={IMAGES.bebida} 
               alt="Cardápio de Bebidas e Drinks" 
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />

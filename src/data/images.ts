@@ -8,6 +8,7 @@ const IMAGES = {
   chef: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1200&auto=format&fit=crop',
   // A sua foto real carregada a partir do diretório public
   fachada: '/fachada.jpg', 
+  bebida: '/bebida.jpg',
 };
 
 export default IMAGES;

@@ -5,7 +5,6 @@ import Footer from './components/Footer';
 import Hero from './sections/Hero';
 import Experience from './sections/Experience';
 import FeaturedDishes from './sections/FeaturedDishes';
-import MenuSection from './sections/MenuSection';
 import Contact from './sections/Contact';
 
 export default function App() {
@@ -16,7 +15,6 @@ export default function App() {
         <Hero />
         <Experience />
         <FeaturedDishes />
-        <MenuSection />
         <Contact />
       </main>
       <Footer />

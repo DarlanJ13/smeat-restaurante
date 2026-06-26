@@ -8,7 +8,6 @@ import FeaturedDishes from './sections/FeaturedDishes';
 import Gallery from './sections/Gallery';
 import MenuSection from './sections/MenuSection';
 import Contact from './sections/Contact';
-import CallToAction from './sections/CallToAction';
 
 export default function App() {
   return (
@@ -19,7 +18,6 @@ export default function App() {
         <Experience />
         <FeaturedDishes />
         <Gallery />
-        <CallToAction />
         <MenuSection />
         <Contact />
       </main>

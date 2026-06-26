@@ -1,96 +1,107 @@
 import { useState, useEffect } from 'react';
 import IMAGES from '../data/images';
 
-// Array de imagens de fundo usando os links configurados no seu images.ts
-const BACKGROUND_IMAGES = [
-  IMAGES.hero,
-  IMAGES.steak,
-  IMAGES.interior,
+const SLIDES = [
+  {
+    image: IMAGES.dish1, // Certifique-se que aponta para uma bela foto de carne na parrilha
+    tagline: 'EXPERIÊNCIA GASTRONÔMICA',
+    title: 'Carnes Nobres na Parrilha',
+    subtitle: 'Venha com a família e aproveite',
+  },
+  {
+    image: IMAGES.dish2, // Foto de aperitivos/entradas crocantes
+    tagline: 'EXPERIÊNCIA GASTRONÔMICA',
+    title: 'Aperitivos Incríveis',
+    subtitle: 'Venha Experimentar',
+  },
+  {
+    image: IMAGES.bebida, // Foto do drink premium de altíssima qualidade
+    tagline: 'EXPERIÊNCIA GASTRONÔMICA',
+    title: 'Drinks Maravilhosos',
+    subtitle: 'Experimente cada um deles',
+  },
 ];
 
 export default function Hero() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
 
-  // Efeito para alternar a imagem de fundo a cada 5 segundos (Estilo Carní)
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        prevIndex === BACKGROUND_IMAGES.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 5000); // 5000ms = 5 segundos
-
+      setCurrent((prev) => (prev + 1) % SLIDES.length);
+    }, 6000); // Muda de slide a cada 6 segundos automaticamente
     return () => clearInterval(timer);
   }, []);
 
-  return (
-    <section
-      id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F0F0F] px-6"
-    >
-      {/* Imagens de Fundo Imersivas em Carrossel (Visual de Revista / Gastronomia de Luxo) */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {BACKGROUND_IMAGES.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Corte premium grelhado em chama aberta em ambiente sofisticado - Slide ${index + 1}`}
-            className={`absolute inset-0 h-full w-full object-cover select-none pointer-events-none scale-105 transition-opacity duration-1000 ease-in-out ${
-              index === currentImageIndex ? 'opacity-35 z-10' : 'opacity-0 z-0'
-            }`}
-            loading={index === 0 ? "eager" : "lazy"}
-          />
-        ))}
-        
-        {/* Vinheta Editorial Fixa (Mantida idêntica por cima das fotos) */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-t from-[#0F0F0F] via-transparent to-[#0F0F0F]/70" />
-        <div className="absolute inset-0 z-20 bg-black/20 backdrop-blur-[1px]" />
-      </div>
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % SLIDES.length);
+  const prevSlide = () => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
 
-      {/* Conteúdo Centralizado Baseado no Layout do Carní */}
-      <div className="relative z-30 mx-auto w-full max-w-5xl text-center flex flex-col items-center justify-center pt-20">
+  return (
+    <section id="home" className="relative w-full h-screen bg-black overflow-hidden">
+      
+      {/* IMAGENS DE FUNDO COM TRANSIÇÃO SUAVE */}
+      {SLIDES.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+            index === current ? 'opacity-60 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+          } transition-transform duration-[6000ms]`}
+        >
+          <img
+            src={slide.image}
+            alt={slide.title}
+            className="w-full h-full object-cover"
+          />
+          {/* Overlay escuro sutil para destacar a tipografia branca */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/50" />
+        </div>
+      ))}
+
+      {/* CONTEÚDO TEXTUAL CENTRALIZADO */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10 select-none">
+        <span className="font-sans text-[11px] sm:text-xs tracking-[0.4em] uppercase text-brass/90 mb-4 animate-fade-in">
+          {SLIDES[current].tagline}
+        </span>
         
-        {/* Subtítulo com espaçamento ultra-wide elegante */}
-        <p className="animate-fade mb-6 text-[10px] font-medium uppercase tracking-[0.4em] text-brass sm:text-xs">
-          Fogo &middot; Arte &middot; Sabor
-        </p>
-        
-        {/* Título com Tipografia de Alta Gastronomia */}
-        <h1 className="animate-fade-up text-balance font-serif text-4xl font-light leading-[1.15] text-ivory sm:text-6xl md:text-7xl lg:text-8xl tracking-tight">
-          O fogo encontra o <br />
-          <span className="italic font-serif font-normal text-brass">refinamento</span>
+        <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-white tracking-wide max-w-4xl leading-tight mb-6">
+          {SLIDES[current].title}
         </h1>
         
-        {/* Texto de Apoio Centralizado e Fluido */}
-        <p className="animate-fade-up mt-8 max-w-xl text-balance font-sans text-sm leading-relaxed text-ivory/60 font-light sm:text-base md:text-lg">
-          Smeat é uma experiência steakhouse premium construída em torno da
-          chama aberta, ingredientes excepcionais e o teatro silencioso da
-          cozinha artesanal.
+        <p className="font-sans text-xs sm:text-sm tracking-[0.2em] text-white/70 font-light max-w-lg">
+          {SLIDES[current].subtitle}
         </p>
-        
-        {/* Botões de Ação com Alinhamento Otimizado */}
-        <div className="mt-10 flex flex-col gap-4 w-full max-w-xs sm:max-w-none sm:flex-row sm:justify-center sm:gap-6">
-          <a 
-            href="#contato" 
-            className="btn-primary text-center px-8 py-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_25px_rgba(245,124,33,0.2)] rounded-[8px]"
-          >
-            Reservar mesa
-          </a>
-          <a 
-            href="#menu" 
-            className="btn-outline text-center px-8 py-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 hover:bg-ivory hover:text-black rounded-[8px]"
-          >
-            Ver o menu
-          </a>
-        </div>
       </div>
 
-      {/* Linha Indicadora de Rolar Lateral/Vertical Ultra Minimalista */}
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 hidden -translate-x-1/2 flex-col items-center gap-3 text-ivory/20 lg:flex">
-        <span className="text-[9px] uppercase tracking-[0.3em] font-mono">Rolar</span>
-        <div className="h-12 w-px bg-gradient-to-b from-ivory/30 to-transparent relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-brass animate-scroll-line" />
-        </div>
+      {/* NAVEGAÇÃO: SETA ESQUERDA */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center text-white/40 hover:text-white transition-colors text-2xl font-light"
+        aria-label="Slide anterior"
+      >
+        ❮
+      </button>
+
+      {/* NAVEGAÇÃO: SETA DIREITA */}
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center text-white/40 hover:text-white transition-colors text-2xl font-light"
+        aria-label="Próximo slide"
+      >
+        ❯
+      </button>
+
+      {/* INDICADORES DE PAGINAÇÃO SUBTIS NO RODAPÉ DO BANNER */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+        {SLIDES.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrent(index)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              index === current ? 'w-6 bg-brass' : 'w-1.5 bg-white/30'
+            }`}
+          />
+        ))}
       </div>
+
     </section>
   );
 }

@@ -5,7 +5,8 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
+      // Ativa o estado assim que passa da altura da barra de endereço (cerca de 36px)
+      if (window.scrollY > 36) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -23,10 +24,10 @@ export default function Navigation() {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex flex-col transition-all duration-300">
+    <header className="relative w-full z-50 flex flex-col">
       
-      {/* TOPBAR SUPERIOR (Linha fina com contatos e endereço) */}
-      <div className="w-full border-b border-white/10 py-2 px-6 lg:px-16 flex justify-between items-center text-[11px] font-sans tracking-wider text-white/80 bg-black/10 backdrop-blur-[1px]">
+      {/* TOPBAR SUPERIOR (Fica no topo absoluto da página e SOME no scroll) */}
+      <div className="w-full bg-[#090909] border-b border-white/10 py-2.5 px-6 lg:px-16 flex justify-between items-center text-[11px] font-sans tracking-wider text-white/80">
         <div className="hidden md:flex items-center gap-1 font-light">
           <span>Av. Dr. Antônio Carlos Couto de Barros, 1400 - Jardim Conceição - Campinas/SP</span>
         </div>
@@ -35,15 +36,17 @@ export default function Navigation() {
           <a href="https://wa.me/5519984051623" target="_blank" rel="noreferrer" className="hover:text-brass transition-colors">
             +55 19 98405-1623
           </a>
-          <a href="mailto:contato@smeat.com.br" className="hover:text-brass transition-colors">
-            contato@smeat.com.br
+          <a href="mailto:contato@smeak.com.br" className="hover:text-brass transition-colors">
+            contato@smeak.com.br
           </a>
         </div>
       </div>
 
-      {/* NAVBAR PRINCIPAL TRANSPARENTE E FLUIDA */}
-      <nav className={`w-full px-6 lg:px-16 py-5 flex items-center justify-between transition-all duration-300 ${
-        isScrolled ? 'bg-black/90 shadow-xl backdrop-blur-md' : 'bg-transparent'
+      {/* NAVBAR PRINCIPAL (Fixa no topo apenas após passar o Topbar) */}
+      <nav className={`w-full px-6 lg:px-16 py-5 flex items-center justify-between transition-all duration-300 z-50 ${
+        isScrolled 
+          ? 'fixed top-0 left-0 bg-black/95 shadow-xl backdrop-blur-md border-b border-white/5 animate-slide-down' 
+          : 'absolute top-[37px] left-0 bg-transparent'
       }`}>
         
         {/* LOGO BRANDING */}
@@ -56,7 +59,7 @@ export default function Navigation() {
           </span>
         </a>
 
-        {/* LINKS EXATAMENTE IGUAL À IMAGEM DE REFERÊNCIA */}
+        {/* LINKS DE CATEGORIAS */}
         <div className="hidden md:flex items-center font-sans text-[11px] font-semibold tracking-[0.25em] uppercase">
           <button onClick={() => handleScrollToSection('oferecemos')} className="text-brass hover:text-white transition-colors px-3 py-1">
             À La Carte
